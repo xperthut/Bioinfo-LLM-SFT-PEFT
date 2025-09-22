@@ -1,0 +1,1 @@
+I used four foundational DNA language model named (DNA-BERT2, UTRLM, GROVER, and EVO-2) and post-trained on 5' untranslated DNA sequence data. The objective of this project is to find efficient model to classify sequences those are not translated.
