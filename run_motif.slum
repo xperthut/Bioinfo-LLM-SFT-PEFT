@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#SBATCH --job-name=MOTIF
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --time=2-2:00:00 
+#SBATCH --partition=ampere
+
+export PATH=/home/mkamruz/meme/bin:/home/mkamruz/meme/libexec/meme-5.5.8:$PATH
+
+# $1 : input fasta file
+# $2 : output directory
+# $3 : number of motifs
+# $4 : control seq fasta file
+# $5 : minimum motif length
+
+echo $1
+echo $2
+echo $3
+echo $4
+echo $5
+
+streme --nmotifs $3 --minw $5 --maxw 25 --dna --time 172800  --p $1 --oc $2 --n $4 --notrim
+#meme $1 -dna -o $2 -nostatus -time 14400 -mod zoops -nmotifs 5 -minw 4 -maxw 25 -objfun classic -revcomp -markov_order 0

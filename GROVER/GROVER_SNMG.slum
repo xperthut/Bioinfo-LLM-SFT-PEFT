@@ -1,0 +1,91 @@
+#!/bin/bash
+
+#SBATCH --job-name=GROVER_SNMG_torchrun
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --time=1-12:00:00 
+#SBATCH --partition=ampere 
+#SBATCH --output=slurm_%j.out 
+#SBATCH --error=slurm_%j.err
+
+nodes=( $( scontrol show hostnames $SLURM_JOB_NODELIST ) )
+nodes_array=($nodes)
+head_node=${nodes_array[0]}
+head_node_ip=$(srun --nodes=1 --ntasks=1 -w "$head_node" hostname --ip-address)
+
+echo Node IP: $head_node_ip
+
+export DB_NAME=$1
+export MODEL_NAME="GROVER"
+export FOUNDATION_MODEL="PoetschLab/GROVER"
+export train_file_name="train.csv"
+export eval_file_name="dev.csv"
+export test_file_name="../randomUTRs/random_25mers_10M.csv" #"test.csv"
+
+export LOGLEVEL=INFO
+export CUDA_LAUNCH_BLOCKING=1
+export TORCH_USE_CUDA_DSA=1
+export TOKENIZERS_PARALLELISM=false
+# cd projects/5UTR/resource/5UTR_mRNA_project/mkamruz/dnaBERT2/
+# Change this to 1, 2, or 3 as needed
+export CHOSEN_OPTION=3
+export DATA_PATH=/projects/wg-GenAI4Bio/for_Methun/5UTR_mRNA_project/DNABERT_data/${DB_NAME}
+# Please set the number as 0.25 * your sequence length. 
+export MAX_LENGTH=15
+export MODEL_SAVE_DIR=/projects/wg-GenAI4Bio/for_Methun/5UTR_mRNA_project/mkamruz/${MODEL_NAME}/eval/${DB_NAME}/SNMG
+export LR=3e-6
+
+echo "DB_NAME: $DB_NAME"
+echo "MODEL_NAME: $MODEL_NAME"
+echo "FOUNDATION_MODEL: $FOUNDATION_MODEL"
+echo "TRAIN: $train_file_name"
+echo "EVAL: $eval_file_name"
+echo "TEST: $test_file_name"
+echo "DATA_PATH: $DATA_PATH"
+echo "MODEL_SAVE_DIR: $MODEL_SAVE_DIR"
+echo "CHOSEN_OPTION: $CHOSEN_OPTION"
+echo "MAX_LENGTH: $MAX_LENGTH"
+echo "LR: $LR"
+
+# Load your conda environment
+CONDA_BASE_DIR=~/software/miniconda3
+source "$CONDA_BASE_DIR/etc/profile.d/conda.sh"
+source activate torch_cuda_128
+
+srun torchrun \
+--nnodes 1 \
+--nproc_per_node 1 \
+--rdzv_id $RANDOM \
+--rdzv_backend c10d \
+--rdzv_endpoint $head_node_ip:29500 \
+GROVER_SNMG.py \
+--model_name_or_path ${FOUNDATION_MODEL} \
+--data_path ${DATA_PATH} \
+--kmer -1 \
+--run_name ${MODEL_NAME}_${DB_NAME} \
+--model_max_length ${MAX_LENGTH} \
+--per_device_train_batch_size 128 \
+--per_device_eval_batch_size 64 \
+--gradient_accumulation_steps 1 \
+--learning_rate ${LR} \
+--num_train_epochs 20 \
+--save_strategy steps \
+--save_steps 2000 \
+--output_dir ${MODEL_SAVE_DIR} \
+--eval_strategy steps \
+--eval_steps 2000 \
+--warmup_steps 50 \
+--logging_steps 10000 \
+--overwrite_output_dir True \
+--log_level info \
+--find_unused_parameters False \
+--auto_find_batch_size True \
+--fp16 True \
+--half_precision_backend auto \
+--option $CHOSEN_OPTION \
+--do_train True \
+--train_file ${train_file_name} \
+--eval_file ${eval_file_name} \
+--test_file ${test_file_name}
+

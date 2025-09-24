@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --job-name=CLUSTERING_10M
+#SBATCH -t 1-12:00:00
+#SBATCH -p ampere
+#SBATCH --output=slurm_%j.out 
+#SBATCH --error=slurm_%j.err
+
+# $1=Fasta file name
+# $2=output file name.txt
+# $3=%match like 0.97 for 97% match
+# $4=batch size for all vs all
+# $5=batch size of sequences to be read
+
+echo $1 $2 $3 $4 $5
+
+../../CAPSIID/Antibody/Other/Identity/bin/meshclust -d $1 -o $2 -t $3 -b $4 -v $5

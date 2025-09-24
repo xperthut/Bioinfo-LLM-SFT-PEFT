@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --job-name=pyspark_cluster
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=8
+#SBATCH --time=1-12:00:00 
+#SBATCH --partition=ampere 
+#SBATCH --output=slurm_%j.out 
+#SBATCH --error=slurm_%j.err
+
+# Load your conda environment
+CONDA_BASE_DIR=~/software/miniconda3
+source "$CONDA_BASE_DIR/etc/profile.d/conda.sh"
+source activate torch_pyspark_cuda_128
+
+python3 cluster.py

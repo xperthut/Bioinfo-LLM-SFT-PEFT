@@ -1,0 +1,322 @@
+conda install -y jupyter
+
+Mac M1: conda env create -f torch-conda-nightly.yml -n torch
+NVIDIA CUDA GPU: conda env create -f torch-cuda.yml -n torch
+CPU Only: conda env create -f torch.yml -n torch
+
+conda activate torch
+
+python -m ipykernel install --user --name pytorch --display-name "Python 3.11 (pytorch)"
+
+
+normal (conda remove -n pythonbase --all)
+=======
+conda env create -f pythonbase.yml -n pythonbase
+conda activate pythonbase
+python -m ipykernel install --user --name pythonbase --display-name "Python 3.12 (base)"
+-- 
+
+
+conda env create -f tensorflow-mac.yml -n tensorflow
+conda activate tensorflow
+python -m ipykernel install --user --name tensorflow --display-name "Python 3.11 (tensorflow)"
+
+Remove conda environment & kernel of jupyter
+============================================
+conda deactivate
+conda remove --name tensorflow --all --yes
+
+
+jupyter kernelspec list
+jupyter kernelspec uninstall tensorflow
+
+
+RDKit (Install with environment)
+=================================
+conda create -c conda-forge -n rdkit-env rdkit
+
+
+moses install
+===============
+conda activate Torch-CUDA-11
+conda install pomegranate
+conda install fcd_torch
+conda install fsspec
+conda install Pyarrow
+
+openeye
+============
+conda activate torch
+conda install -c openeye openeye-toolkits
+
+Tensorflow:
+============================
+conda env create -f tensorflow.yml -n tensorflow
+conda activate tensorflow
+
+conda env create -f tensorflow-gpu.yml -n tensorflow-gpu
+conda activate tensorflow-gpu
+
+
+DDP
+=============
+conda remove --name ddp --all --yes
+conda env create -f ddp.yml -n ddp
+
+torch_cuda_11
+======================
+conda update -n base -c defaults conda
+conda remove --name torch_cuda_11 --all --yes
+conda env create -f torch_cuda_11.yml -n torch_cuda_11
+conda activate torch_cuda_11
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu118
+pip uninstall triton
+pip install accelerate
+pip install huggingface_hub[hf_xet]
+
+torch_cuda_128
+=========================
+conda create -n torch_cuda_128 python=3.12.0
+conda activate torch_cuda_128
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+pip3 install transformers peft
+pip3 install scikit-learn
+pip3 install multimolecule
+pip3 install ipykernel
+pip3 install wandb
+pip3 install accelerate
+pip3 install 'huggingface_hub[hf_xet]'
+pip3 install einops
+pip3 uninstall triton
+pip3 install matplotlib
+pip3 install seaborn
+pip3 install shap
+pip3 install lightning
+pip3 install -U 'tensorboardX'
+pip3 install -U 'tensorboard'
+pip3 install -U mpi4py mpich openmpi
+pip3 install -U statsmodels
+pip3 install -U biopython
+pip3 install -U scikit-optimize
+pip3 install -U shap 
+pip3 install -U xgboost
+pip3 install -U optuna
+
+
+torch_pyspark_cuda_128
+=========================
+conda create -n torch_pyspark_cuda_128 python=3.12.0
+conda activate torch_pyspark_cuda_128
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+pip3 install pyspark
+pip3 install transformers peft
+pip3 install scikit-learn
+pip3 install pandas
+pip3 install multimolecule
+pip3 install ipykernel
+pip3 install wandb
+pip3 install accelerate
+pip3 install 'huggingface_hub[hf_xet]'
+pip3 install einops
+pip3 uninstall triton
+
+
+python -m ipykernel install --user --name torch_cuda_128 --display-name "Python 3.12.0 (torch_cuda_128)"
+
+
+test_cuda
+=========================
+conda remove --name test_cuda --all --yes
+conda create -n test_cuda python=3.12.0 --all --yes
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu118
+
+
+Install to existing environment
+=================================
+conda activate <ENV>
+conda install <PACKAGE>
+
+
+
+Run commands
+=====================
+
+mpra_data (Done)
+--------------------------------------------
+rm -rf wandb
+sbatch dnaBERT2_SNMG.slum mpra_data
+
+rm -rf wandb
+sbatch utrlm_SNMG.slum mpra_data
+
+rm -rf wandb
+sbatch GROVER_SNMG.slum mpra_data
+
+
+cao2021 (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021
+
+
+cao2021/ratios/hek (Done)
+-------------------------------------------- 
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/hek
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/hek
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/hek
+
+
+cao2021/ratios/hek_muscle (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/hek_muscle
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/hek_muscle
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/hek_muscle
+
+
+
+
+cao2021/ratios/hek_muscle_pc3  (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/hek_muscle_pc3
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/hek_muscle_pc3
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/hek_muscle_pc3
+
+
+
+
+cao2021/ratios/hek_pc3 (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/hek_pc3
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/hek_pc3
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/hek_pc3
+
+
+cao2021/ratios/muscle  (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/muscle
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/muscle
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/muscle
+
+
+
+cao2021/ratios/muscle_pc3  (Done)
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/muscle_pc3
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/muscle_pc3
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/muscle_pc3
+
+
+cao2021/ratios/pc3 
+--------------------------------------------
+rm -rf wandb slurm_*
+sbatch dnaBERT2_SNMG.slum cao2021/ratios/pc3
+
+rm -rf wandb slurm_*
+sbatch utrlm_SNMG.slum cao2021/ratios/pc3
+
+rm -rf wandb slurm_*
+sbatch GROVER_SNMG.slum cao2021/ratios/pc3
+
+
+Meheclust run
+========================================
+sbatch run_cluster.slum random_25mers_10M.fasta output_Aug_7_80.txt 0.80 25000 100000
+sbatch run_cluster.slum random_25mers_10M.fasta output_Aug_26_40.txt 0.40 5000 20000
+sbatch run_cluster.slum random_25mers_10M.fasta output_Aug_26_60.txt 0.60 5000 20000
+sbatch run_cluster.slum random_25mers_10M.fasta output_Aug_7_95.txt 0.95 25000 100000
+
+sbatch run_cluster.slum random_25mers_10M_0_10.fa output_Sept_80_0_10.txt 0.80 5000 20000
+sbatch run_cluster.slum random_25mers_10M_0_11.fa output_Sept_80_0_11.txt 0.80 5000 20000
+sbatch run_cluster.slum random_25mers_10M_23_24.fa output_Sept_80_23_24.txt 0.80 5000 20000
+
+sbatch run_cluster.slum random_25mers_10M.fa output_Sept_15_80.txt 0.80 25000 100000
+
+sbatch run_identity.slum random_25mers_10M.fasta output_Identity_Aug_7_80.txt 0.80
+
+streme
+===================
+streme -nmotifs 20 --minw 8 --maxw 25  --p ../Data/random_25mers_10M_2_13.fa
+
+
+Run the following commands to compile, test and install meme:
+        make
+        make test
+        make install
+
+  Then make sure that the following two directories are added to
+  your PATH variable:
+        /home/mkamruz/meme/bin
+        /home/mkamruz/meme/libexec/meme-5.5.8
+
+  This can often be done by editing the file named .profile to add
+  the following line:
+	export PATH=/home/mkamruz/meme/bin:/home/mkamruz/meme/libexec/meme-5.5.8:$PATH
+
+Cluster distance command:
+============================
+Local mac:
+---------
+python cluster_distance.py --start 101 --end 202 --df /Users/mkamruz/Public/SNL/Projects/5UTR/Data --cf output_Aug_7_80.txt --gf gc_content_predictions.csv --ms 500 --cis 80
+python cluster_distance.py --start 0 --end 101 --df /Users/mkamruz/Public/SNL/Projects/5UTR/Data --cf output_Aug_7_95.txt --gf gc_content_predictions.csv --ms 9 --cis 95
+python cluster_distance.py --start 0 --end 2600 --df /Users/mkamruz/Public/SNL/Projects/5UTR/Data --cf output_Aug_26_66.txt --gf gc_content_predictions.csv --ms 100 --cis 66
+
+Singra:
+-------
+sbatch runCD.slum 0 3190 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 500 80
+
+sbatch runCD.slum 0 208 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+sbatch runCD.slum 125 415 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+sbatch runCD.slum 250 622 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+sbatch runCD.slum 375 829 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+sbatch runCD.slum 500 1036 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+sbatch runCD.slum 625 1247 /home/mkamruz/projects/5UTR/Data output_Aug_7_80.txt gc_content_predictions.csv 80
+
+sbatch runCD.slum 0 151 /home/mkamruz/projects/5UTR/Data output_Aug_7_95.txt gc_content_predictions.csv 10 95
+
+sbatch runCD.slum 0 2600 /home/mkamruz/projects/5UTR/Data output_Aug_26_66.txt gc_content_predictions.csv 100 66
+
+Compute statistical significance
+====================================
+python cluster_significant.py --datapath /Users/mkamruz/Public/SNL/Projects/5UTR/Data --resultpath ../result_sig --clusterfile output_Aug_26_66.txt --genefile gc_content_predictions.csv
+
+
+
+# Copy
+scp *.fa mkamruz@singra:./projects/5UTR/Data/motif_all_random_shuffle 
+
